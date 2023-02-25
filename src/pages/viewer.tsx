@@ -1,8 +1,9 @@
 import { useState } from "react";
 import DocumentWrapper from "../components/Viewer/DocumentWrapper";
 import defaultFile from "../../assets/Algorithms-JeffE.pdf";
+import PageWrapper from "../components/Layout/PageWrapper";
 
-export default function Book() {
+export default function Viewer() {
 	const [file, setFile] = useState(defaultFile);
 
 	function onFileChange(event) {
@@ -10,7 +11,7 @@ export default function Book() {
 	}
 
 	return (
-		<div className="Example">
+		<PageWrapper {...{ title: "Viewer" }}>
 			<header>
 				<h1>react-pdf sample page</h1>
 			</header>
@@ -21,6 +22,6 @@ export default function Book() {
 				</div>
 				<DocumentWrapper {...{ file: file }} />
 			</div>
-		</div>
+		</PageWrapper>
 	);
 }

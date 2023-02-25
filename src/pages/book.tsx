@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DocumentWrapper from "../components/DocumentWrapper";
-import defaultFile from "../../assets/Algorithms-JeffE-shortened.pdf";
+import DocumentWrapper from "../components/Viewer/DocumentWrapper";
+import defaultFile from "../../assets/Algorithms-JeffE.pdf";
 
 export default function Book() {
 	const [file, setFile] = useState(defaultFile);

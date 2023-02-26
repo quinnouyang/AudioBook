@@ -1,9 +1,9 @@
 import { useState } from "react";
-import DocumentWrapper from "../components/Viewer/DocumentWrapper";
+import DocumentWrapper from "../components/Reader/DocumentWrapper";
 import defaultFile from "../../assets/Algorithms-JeffE-shortened.pdf";
 import PageWrapper from "../components/Layout/PageWrapper";
 
-export default function Viewer() {
+export default function Reader() {
 	const [file, setFile] = useState(defaultFile);
 
 	function onFileChange(event) {
@@ -13,7 +13,7 @@ export default function Viewer() {
 	return (
 		<PageWrapper
 			{...{
-				title: "Viewer",
+				title: "Reader",
 				ctaLabel: "Donate ❤️",
 				ctaLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 			}}

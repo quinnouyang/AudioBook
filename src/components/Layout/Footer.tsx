@@ -1,7 +1,7 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Container, Stack, Text } from "@chakra-ui/react";
 import ShortLogo from "../ShortLogo";
-import CombinedLink from "../Utilities/CombinedLink";
+import CombinedLink from "../CombinedLink";
 
 export default function Footer() {
 	return (
@@ -10,7 +10,7 @@ export default function Footer() {
 				<ShortLogo height={32} />
 			</CombinedLink>
 			<Stack direction={"row"} spacing={"1em"}>
-				<Text>What is Copyright © 2023?</Text>
+				<Text>What is Copyright? © 2023</Text>
 				<Text></Text>
 				<CombinedLink
 					href="https://github.com/quinnouyang/music-ereader-app"

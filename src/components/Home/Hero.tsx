@@ -1,6 +1,6 @@
 import { Heading, Text, Container, Box } from "@chakra-ui/layout";
 import { createIcon, Icon, Show } from "@chakra-ui/react";
-import CTAButton from "./CTAButton";
+import LinkButton from "../LinkButton";
 
 const H1_FONT_SIZE = { base: "4xl", sm: "6xl", lg: "8xl" };
 const H2_FONT_SIZE = { base: "1xl", sm: "2xl" };
@@ -26,12 +26,11 @@ export default function Hero() {
 				fontSize={H2_FONT_SIZE}
 				align="center"
 			>
-				Enhance your reading experience with{" "}
-				<strong>dynamically generated 🚀</strong> music for you and your
-				favorite books.
+				Enhance your e-reading with <strong>dynamically generated 🚀</strong>{" "}
+				music for you and your favorite books.
 			</Text>
 			<Box position={"relative"}>
-				<CTAButton {...{ label: "Get started", link: "/get-started" }} />
+				<LinkButton {...{ link: "/getting-started" }}>Get started</LinkButton>
 				<Show breakpoint="(min-width: 400px)">
 					<Box>
 						<Icon

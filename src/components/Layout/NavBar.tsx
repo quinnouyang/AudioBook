@@ -1,8 +1,8 @@
 import { Box, Flex, Spacer, Show } from "@chakra-ui/react";
 import FullLogo from "../FullLogo";
-import CTAButton from "../Home/CTAButton";
 import ShortLogo from "../ShortLogo";
-import CombinedLink from "../Utilities/CombinedLink";
+import CombinedLink from "../CombinedLink";
+import LinkButton from "../LinkButton";
 
 export default function NavBar({
 	ctaLabel,
@@ -23,7 +23,7 @@ export default function NavBar({
 					</Show>
 				</CombinedLink>
 				<Spacer />
-				{<CTAButton {...{ label: ctaLabel, link: ctaLink }} />}
+				{<LinkButton {...{ link: ctaLink }}>{ctaLabel}</LinkButton>}
 			</Flex>
 		</Box>
 	);

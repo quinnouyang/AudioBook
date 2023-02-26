@@ -5,7 +5,7 @@ import CombinedLink from "../CombinedLink";
 
 export default function Footer() {
 	return (
-		<Container as={Stack} maxW={"6xl"} py={4} spacing={4} align={"center"}>
+		<Container as={Stack} maxW={"6xl"} py={8} spacing={4} align={"center"}>
 			<CombinedLink href="/#">
 				<ShortLogo height={32} />
 			</CombinedLink>

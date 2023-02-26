@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter } from "@chakra-ui/card";
+import { Card, CardBody } from "@chakra-ui/card";
 import {
 	Box,
 	Container,
@@ -12,6 +12,8 @@ import Hero from "../components/Home/Hero";
 import PageWrapper from "../components/Layout/PageWrapper";
 import { Image } from "@chakra-ui/image";
 import CombinedLink from "../components/CombinedLink";
+import "@fontsource/caveat";
+import LinkButton from "../components/LinkButton";
 
 export default function HomePage() {
 	return (
@@ -22,8 +24,9 @@ export default function HomePage() {
 				<VStack py={[8, 16]}>
 					<Heading
 						maxW={["1xl", "2xl", "8xl"]}
-						fontSize={[24, 48, 64]}
+						fontSize={[36, 54, 72]}
 						pb={[8, 16]}
+						fontFamily="Caveat"
 					>
 						A{" "}
 						<Text color="pink.400" as="span">
@@ -33,146 +36,125 @@ export default function HomePage() {
 					</Heading>
 					<Container>
 						<VStack spacing={10}>
-							<Card
-								direction={{ base: "column", lg: "row" }}
-								minW="60vw"
-								overflow="hidden"
-								variant="outline"
-							>
+							<Card direction={{ base: "column", lg: "row" }} minW="60vw">
 								<Image
 									objectFit="cover"
 									maxW={{ base: "100%", lg: "40%" }}
-									src="https://cdn.windowsreport.com/wp-content/uploads/2020/04/PDF-66.jpg"
+									src="/pdf-icon.webp"
 									alt="PDF Icon"
 								/>
 
 								<Stack p={[4, 8]}>
 									<CardBody>
 										<Heading size={"xl"}>
-											Upload Your{" "}
 											<Text color="blue.400" as="span">
-												Book
+												A.I.
 											</Text>{" "}
-											📚
+											Text Analysis 📖
 										</Heading>
 										<Text fontSize="xl" py="2">
-											We allow books in the form of PDF files*, where{" "}
-											<strong>artifical intelligence</strong>
-											<br />
+											AudioBook leverages state-of-the-art{" "}
+											<strong>machine learning</strong> models, analyzing the
+											genre-specific details down to the pages that you are
+											reading.
 										</Text>
 									</CardBody>
-
-									<CardFooter>
-										<Text color="gray.600">
-											*We hope to support EPUB file uploads and logins to other
-											popular online reading services in the future.
-										</Text>
-									</CardFooter>
 								</Stack>
 							</Card>
+
 							<Card
 								p={[4, 8]}
 								minW="60vw"
 								direction={{ base: "column", lg: "row-reverse" }}
-								overflow="hidden"
-								variant="outline"
 							>
 								<Image
 									objectFit="contain"
 									maxW={{ base: "100%", lg: "40%" }}
-									src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png"
+									src="/spotify-logo.png"
 									alt="Spotify Logo"
 								/>
 
 								<Stack>
 									<CardBody>
 										<Heading size={"xl"}>
-											Sign-in to{" "}
-											<CombinedLink
-												href="https://open.spotify.com/"
-												color="green.400"
-											>
-												Spotify
-											</CombinedLink>{" "}
-											🎧
+											<Text color="green.400" as="span">
+												Real-time
+											</Text>{" "}
+											Music Queuing 📊
 										</Heading>
 
 										<Text fontSize="xl" py="2">
-											We use{" "}
-											<CombinedLink href="https://open.spotify.com/">
+											Powered by{" "}
+											<CombinedLink
+												href="https://open.spotify.com/"
+												color="green.400"
+												_hover={{ color: "green.300" }}
+												isExternal
+											>
 												<strong>Spotify</strong>
 											</CombinedLink>
-											* to seamlessly integrate a high-fidelity background
-											listening experience as you read. <br /> Let the music{" "}
-											<strong>immerse</strong> you into the fantasy of your
-											favorite novels.
+											, text analyses from your reading inform{" "}
+											<strong>real-time</strong> sourcing to queue the most
+											fitting background music.
 										</Text>
 									</CardBody>
-
-									<CardFooter>
-										<Text color="gray.600">
-											*Spotify Premium is highly recommended–we can't skip ads
-											for you.
-											<br />
-											We hope to support logins to other popular music streaming
-											services in the future.
-										</Text>
-									</CardFooter>
 								</Stack>
 							</Card>
+
 							<Card
 								p={[4, 8]}
 								minW="60vw"
 								direction={{ base: "column", lg: "row" }}
-								overflow="hidden"
-								variant="outline"
 							>
 								<Image
 									objectFit="contain"
 									maxW={{ base: "100%", lg: "40%" }}
-									src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png"
-									alt="Spotify Logo"
+									src="/e-reader.png"
+									alt="E-reader"
 								/>
 
 								<Stack>
 									<CardBody>
 										<Heading size={"xl"}>
-											Sign-in to{" "}
 											<CombinedLink
 												href="https://open.spotify.com/"
-												color="green.400"
+												color="pink.400"
 											>
-												Spotify
+												Enhanced
 											</CombinedLink>{" "}
-											🎧
+											Experience 🎧
 										</Heading>
 
 										<Text fontSize="xl" py="2">
-											We use{" "}
-											<CombinedLink href="https://open.spotify.com/">
-												<strong>Spotify</strong>
-											</CombinedLink>
-											* to seamlessly integrate a high-fidelity background
-											listening experience as you read. <br /> Let the music{" "}
-											<strong>immerse</strong> you into the fantasy of your
-											favorite novels.
+											Our web e-reader strives to offer you the most{" "}
+											<strong>immerssive</strong> reading experience possible,
+											playing music softly and seamlessly in the background.
 										</Text>
 									</CardBody>
-
-									<CardFooter>
-										<Text color="gray.600">
-											*Spotify Premium is highly recommended–we can't skip ads
-											for you.
-											<br />
-											We hope to support logins to other popular music streaming
-											services in the future.
-										</Text>
-									</CardFooter>
 								</Stack>
 							</Card>
 						</VStack>
 					</Container>
 				</VStack>
+			</Box>
+			<Box bgColor="pink.50">
+				<Container maxW={["1xl", "2xl", "8xl"]} centerContent py={[8, 16]}>
+					<Heading
+						color="purple.400"
+						fontSize={{ base: "3xl", sm: "5xl", lg: "7xl" }}
+					>
+						Try it now.
+					</Heading>
+					<Heading
+						fontFamily={"Caveat"}
+						fontSize={{ base: "3xl", sm: "5xl", lg: "7xl" }}
+						justifyContent="center"
+						pb={[8, 16]}
+					>
+						In 3 easy steps!
+					</Heading>
+					<LinkButton {...{ link: "/getting-started" }}>Get started</LinkButton>
+				</Container>
 			</Box>
 		</PageWrapper>
 	);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DocumentWrapper from "../components/Viewer/DocumentWrapper";
-import defaultFile from "../../assets/Algorithms-JeffE.pdf";
+import defaultFile from "../../assets/Algorithms-JeffE-shortened.pdf";
 import PageWrapper from "../components/Layout/PageWrapper";
 
 export default function Viewer() {
@@ -11,7 +11,13 @@ export default function Viewer() {
 	}
 
 	return (
-		<PageWrapper {...{ title: "Viewer" }}>
+		<PageWrapper
+			{...{
+				title: "Viewer",
+				ctaLabel: "Donate ❤️",
+				ctaLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+			}}
+		>
 			<header>
 				<h1>react-pdf sample page</h1>
 			</header>

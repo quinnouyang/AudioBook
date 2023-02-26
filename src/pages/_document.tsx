@@ -13,24 +13,28 @@ export default class Document extends NextDocument {
 					/>
 					<link
 						rel="icon"
-						type="imapng"
+						type="image/png"
 						sizes="32x32"
 						href="/favicon/favicon-32x32.png"
 					/>
 					<link
 						rel="icon"
-						type="imapng"
+						type="image/png"
 						sizes="16x16"
 						href="/favicon/favicon-16x16.png"
 					/>
-					{/* <link rel="manifest" href="/favicons/site.webmanifest" /> */}
+					<link rel="manifest" href="/favicon/site.webmanifest" />
 					<link
 						rel="mask-icon"
 						href="/favicon/safari-pinned-tab.svg"
-						// color="#13294B"
+						color="#ed64a6"
 					/>
-					{/* <meta name="msapplication-TileColor" content="#da532c" />
-					<meta name="theme-color" content="#ffffff" /> */}
+					<meta name="msapplication-TileColor" content="#ed64a6" />
+					<meta name="theme-color" content="#ed64a6" />
+					<link
+						href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
+						rel="stylesheet"
+					/>
 				</Head>
 				<body>
 					{/* Make Color mode to persists when you refresh the page. */}

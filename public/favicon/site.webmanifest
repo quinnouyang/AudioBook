@@ -1,6 +1,6 @@
 {
-    "name": "Contextual Engineering",
-    "short_name": "Contextual Engineering",
+    "name": "AudioBook",
+    "short_name": "AudioBook",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#ed64a6",
+    "background_color": "#ed64a6",
     "display": "standalone"
 }

@@ -4,7 +4,9 @@ import CombinedLink from "../components/Utilities/CombinedLink";
 
 export default function ErrorPage() {
 	return (
-		<PageWrapper {...{ title: "404 Error" }}>
+		<PageWrapper
+			{...{ title: "404 Error", ctaLabel: "Get started", ctaLink: "/get-started" }}
+		>
 			<Container>
 				<Heading>o shit</Heading>
 				<CombinedLink href="/">

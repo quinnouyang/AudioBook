@@ -1,29 +1,31 @@
 import { Card, CardBody, CardFooter } from "@chakra-ui/card";
 import {
-	Box,
-	Container,
-	Divider,
-	Heading,
-	Stack,
-	Text,
 	VStack,
+	Stack,
+	Heading,
+	Text,
+	Container,
+	Box,
 } from "@chakra-ui/layout";
-import Hero from "../components/Home/Hero";
 import PageWrapper from "../components/Layout/PageWrapper";
-import { Image } from "@chakra-ui/image";
 import CombinedLink from "../components/Utilities/CombinedLink";
+import { Image } from "@chakra-ui/image";
 
-export default function HomePage() {
+export default function Setup() {
 	return (
-		<PageWrapper {...{ ctaLabel: "Get started", ctaLink: "/get-started" }}>
-			<Hero />
-			<Divider />
-			<Box bgColor="blue.50">
+		<PageWrapper
+			{...{
+				title: "Get Started",
+				ctaLabel: "Donate ❤️",
+				ctaLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+			}}
+		>
+			<Box bgColor="orange.50">
 				<Container centerContent py={[8, 16]}>
 					<Heading fontSize={[24, 48, 64]} pb={[8, 16]}>
-						How it{" "}
+						Get{" "}
 						<Text color="pink.400" as="span">
-							Works
+							Started
 						</Text>
 					</Heading>
 					<VStack spacing={10}>

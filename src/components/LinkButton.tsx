@@ -5,6 +5,7 @@ import React from "react";
 type LinkButtonProps = {
 	children: React.ReactNode;
 	link: string;
+	data?: string;
 	bgColor?: string;
 	hoverBgColor?: string;
 	props?: ButtonProps;
@@ -13,6 +14,7 @@ type LinkButtonProps = {
 export default function LinkButton({
 	children,
 	link,
+	data,
 	bgColor,
 	hoverBgColor,
 	props,
@@ -20,7 +22,7 @@ export default function LinkButton({
 	return (
 		<Button
 			as={Link}
-			href={link}
+			href={{ pathname: link, query: data }}
 			size="lg"
 			color={"white"}
 			bg={bgColor ?? "pink.400"}

@@ -18,6 +18,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import LinkButton from "../components/LinkButton";
 import "@fontsource/caveat";
 import { useToast } from "@chakra-ui/toast";
+import { useRouter } from "next/router";
 
 type CircleProps = { number: number; color: string };
 
@@ -74,12 +75,24 @@ function StepCard({
 	);
 }
 
-function UploadButton() {
-	const [file, setFile] = useState<string>();
+function UploadButton({ file }: { file: string }) {
+	const toast = useToast();
+	const router = useRouter();
+
+	useEffect(() => {
+		if (file)
+			toast({
+				title: "File uploaded.",
+				status: "info",
+				position: "bottom-left",
+				duration: 4000,
+				isClosable: true,
+			});
+	}, [file]);
 
 	function onFileChange(event) {
-		setFile(event.target.files[0]);
-		console.log(file);
+		file = event.target.files[0];
+		router.push(file);
 	}
 
 	return (
@@ -109,6 +122,7 @@ function LoginButton() {
 	useEffect(() => {
 		if (session)
 			toast({
+				// Inconnsitent rendering
 				title: "Success!",
 				description: "You're signed into Spotify.",
 				status: "success",
@@ -141,33 +155,12 @@ function LoginButton() {
 	);
 }
 
-function UploadCard() {
-	return (
-		<StepCard
-			{...{
-				title: "Upload Your Book 📚",
-				circleProps: { ...{ number: 1, color: "blue.400" } },
-				button: <UploadButton />,
-				footerText:
-					"*We hope to support EPUB file uploads and logins to other popular online reading services in the future.",
-			}}
-		>
-			<Text fontSize="xl" py="2">
-				Please upload a book (novels work best!) in the form of a PDF file*,
-				where <strong>artifical intelligence</strong> will analyze it as you
-				read to <strong>customize</strong> background music that fits your
-				reading pace.
-			</Text>
-		</StepCard>
-	);
-}
-
 function SpotifyCard() {
 	return (
 		<StepCard
 			{...{
 				title: "Sign in to Spotify 🎧",
-				circleProps: { ...{ number: 2, color: "green.400" } },
+				circleProps: { ...{ number: 1, color: "green.400" } },
 				button: <LoginButton />,
 				footerText:
 					"*We highly recommend Spotify Premium–we cannot skip intrusive ads for you. 😔",
@@ -186,13 +179,38 @@ function SpotifyCard() {
 	);
 }
 
-function ReadCard() {
+function UploadCard({ file }: { file: string }) {
+	return (
+		<StepCard
+			{...{
+				title: "Upload Your Book 📚",
+				circleProps: { ...{ number: 2, color: "blue.400" } },
+				button: <UploadButton {...{ file }} />,
+				footerText:
+					"*We hope to support EPUB file uploads and logins to other popular online reading services in the future.",
+			}}
+		>
+			<Text fontSize="xl" py="2">
+				Please upload a book (novels work best!) in the form of a PDF file*,
+				where <strong>artifical intelligence</strong> will analyze it as you
+				read to <strong>customize</strong> background music that fits your
+				reading pace.
+			</Text>
+		</StepCard>
+	);
+}
+
+function ReadCard({ file }: { file: string }) {
 	return (
 		<StepCard
 			{...{
 				title: "Start your AudioBook! ⚡",
 				circleProps: { ...{ number: 3, color: "pink.400" } },
-				button: <LinkButton {...{ link: "/reader" }}>Let's go!</LinkButton>,
+				button: (
+					<LinkButton {...{ link: "/reader", data: file }}>
+						Let's go!
+					</LinkButton>
+				),
 			}}
 		>
 			<Text fontSize="xl" py="2">
@@ -205,6 +223,8 @@ function ReadCard() {
 }
 
 export default function Setup() {
+	const [file, setFile] = useState<string>();
+
 	return (
 		<PageWrapper
 			{...{
@@ -231,9 +251,9 @@ export default function Setup() {
 					</Heading>
 					<Container>
 						<VStack spacing={10}>
-							<UploadCard />
 							<SpotifyCard />
-							<ReadCard />
+							<UploadCard {...{ file }} />
+							<ReadCard {...{ file }} />
 						</VStack>
 					</Container>
 				</Container>

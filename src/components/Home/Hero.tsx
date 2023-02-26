@@ -1,6 +1,7 @@
 import { Heading, Text, Container, Box } from "@chakra-ui/layout";
 import { createIcon, Icon, Show } from "@chakra-ui/react";
 import LinkButton from "../LinkButton";
+import "@fontsource/caveat"
 
 const H1_FONT_SIZE = { base: "4xl", sm: "6xl", lg: "8xl" };
 const H2_FONT_SIZE = { base: "1xl", sm: "2xl" };

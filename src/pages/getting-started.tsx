@@ -6,81 +6,88 @@ import {
 	Text,
 	Container,
 	Box,
-	HStack,
 	Circle,
 } from "@chakra-ui/layout";
 import PageWrapper from "../components/Layout/PageWrapper";
 import CombinedLink from "../components/CombinedLink";
-import { Image } from "@chakra-ui/image";
 import CustomButton from "../components/CustomButton";
-import { Children, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMultiStyleConfig } from "@chakra-ui/system";
 import { Input } from "@chakra-ui/input";
 import { useSession, signIn, signOut } from "next-auth/react";
+import LinkButton from "../components/LinkButton";
+import "@fontsource/caveat";
+import { useToast } from "@chakra-ui/toast";
 
-type CircleProps = { color: string; number: number };
+type CircleProps = { number: number; color: string };
 
 function StepCircle({ color, number }: CircleProps) {
 	return (
-		<Circle size={["60px", "90px", "120px"]} bg={color} color="white" m={10}>
-			<Heading fontSize={["2xl", "4xl", "6xl"]}>{number}</Heading>
+		<Circle size={["90px", "120px"]} bg={color} color="white" m={10}>
+			<Heading fontSize={["4xl", "6xl"]}>{number}</Heading>
 		</Circle>
 	);
 }
 
 type CardProps = {
-	title: React.ReactNode;
-	stepCircle: typeof StepCircle;
-	direction: "row" | "row-reverse";
-	body: React.ReactNode;
-	footerText: string;
+	title: string;
+	circleProps: CircleProps;
+	footerText?: string;
+	button: React.ReactNode; // Weak typing
+	children: React.ReactNode;
 };
 
 function StepCard({
 	title,
-	stepCircle,
-	direction,
-	body,
+	circleProps,
 	footerText,
+	button,
+	children,
 }: CardProps) {
 	return (
 		<Card
-			direction={{ base: "column", xl: direction }}
+			direction={{ base: "column", xl: "row" }}
 			minW="60vw"
 			overflow="hidden"
 			variant="outline"
 			align="center"
+			borderColor={circleProps.color}
+			borderWidth={4}
 		>
-			{stepCircle}
+			<StepCircle {...circleProps} />
 			<Stack p={[4, 8]}>
 				<CardBody>
 					<Heading size={"xl"}>{title}</Heading>
-					{body}
+					{children}
 				</CardBody>
 
 				<CardFooter>
 					<VStack align="start">
-						<UploadButton />
-						<Text color="gray.600">{footerText}</Text>
+						{button}
+						<Text fontSize={12} color="gray.600">
+							{footerText}
+						</Text>
 					</VStack>
 				</CardFooter>
 			</Stack>
 		</Card>
 	);
 }
+
 function UploadButton() {
 	const [file, setFile] = useState<string>();
 
 	function onFileChange(event) {
 		setFile(event.target.files[0]);
-		// console.log(file);
+		console.log(file);
 	}
 
 	return (
 		<Input
 			type="file"
 			onChange={onFileChange}
-			onProgress={() => {}}
+			maxWidth={400}
+			accept=".pdf"
 			sx={{
 				"::file-selector-button": {
 					height: 10,
@@ -96,24 +103,33 @@ function UploadButton() {
 }
 
 function LoginButton() {
-	const { data } = useSession();
+	const { data: session } = useSession();
+	const toast = useToast();
 
-	console.log("data: ", data);
-	if (data) {
+	useEffect(() => {
+		if (session)
+			toast({
+				title: "Success!",
+				description: "You're signed into Spotify.",
+				status: "success",
+				position: "bottom-left",
+				duration: 4000,
+				isClosable: true,
+			});
+	}, []);
+
+	if (session) {
 		return (
-			<>
-				{/* @ts-ignore */}
-				Signed in as {data?.session?.user?.email} <br />
-				<CustomButton
-					onClick={() => signOut()}
-					bgColor="green.400"
-					hoverBgColor="green.300"
-				>
-					Sign out
-				</CustomButton>
-			</>
+			<CustomButton
+				onClick={() => signOut()}
+				bgColor="red.400"
+				hoverBgColor="red.300"
+			>
+				Sign out
+			</CustomButton>
 		);
 	}
+
 	return (
 		<CustomButton
 			onClick={() => signIn("spotify")}
@@ -127,46 +143,64 @@ function LoginButton() {
 
 function UploadCard() {
 	return (
-		<>
-			<StepCard {...{ title: }} />
-			<Card
-				direction={{ base: "column", xl: "row-reverse" }}
-				minW="60vw"
-				overflow="hidden"
-				variant="outline"
-				align="center"
-			>
-				<StepCircle {...{ number: 1, color: "purple.400" }} />
-				<Stack p={[4, 8]}>
-					<CardBody>
-						<Heading size={"xl"}>
-							1. Upload Your{" "}
-							<Text color="blue.400" as="span">
-								Book
-							</Text>{" "}
-							📚
-						</Heading>
-						<Text fontSize="xl" py="2">
-							We allow books in the form of PDF files*, where{" "}
-							<strong>artifical intelligence</strong> will queue background
-							music that fits what you're reading,{" "}
-							<strong>as you read it.</strong>
-							<br />
-						</Text>
-					</CardBody>
+		<StepCard
+			{...{
+				title: "Upload Your Book 📚",
+				circleProps: { ...{ number: 1, color: "blue.400" } },
+				button: <UploadButton />,
+				footerText:
+					"*We hope to support EPUB file uploads and logins to other popular online reading services in the future.",
+			}}
+		>
+			<Text fontSize="xl" py="2">
+				Please upload a book (novels work best!) in the form of a PDF file*,
+				where <strong>artifical intelligence</strong> will analyze it as you
+				read to <strong>customize</strong> background music that fits your
+				reading pace.
+			</Text>
+		</StepCard>
+	);
+}
 
-					<CardFooter>
-						<VStack align="start">
-							<UploadButton />
-							<Text color="gray.600">
-								*We hope to support EPUB file uploads and logins to other
-								popular online reading services in the future.
-							</Text>
-						</VStack>
-					</CardFooter>
-				</Stack>
-			</Card>
-		</>
+function SpotifyCard() {
+	return (
+		<StepCard
+			{...{
+				title: "Sign in to Spotify 🎧",
+				circleProps: { ...{ number: 2, color: "green.400" } },
+				button: <LoginButton />,
+				footerText:
+					"*We highly recommend Spotify Premium–we cannot skip intrusive ads for you. 😔",
+			}}
+		>
+			<Text fontSize="xl" py="2">
+				Please log into your{" "}
+				<CombinedLink href="https://open.spotify.com/">
+					<strong>Spotify</strong>
+				</CombinedLink>
+				* account to seamlessly integrate a high-fidelity reading and listening
+				experience, where we automatically queue music in the background as you
+				read.
+			</Text>
+		</StepCard>
+	);
+}
+
+function ReadCard() {
+	return (
+		<StepCard
+			{...{
+				title: "Start your AudioBook! ⚡",
+				circleProps: { ...{ number: 3, color: "pink.400" } },
+				button: <LinkButton {...{ link: "/reader" }}>Let's go!</LinkButton>,
+			}}
+		>
+			<Text fontSize="xl" py="2">
+				Head over to our e-reader, press play, and let the music{" "}
+				<strong>immerse</strong> you into the fantasy of your favorite novel.
+				Enjoy!
+			</Text>
+		</StepCard>
 	);
 }
 
@@ -179,115 +213,29 @@ export default function Setup() {
 				ctaLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 			}}
 		>
-			<Box>
-				<Container centerContent py={[8, 16]}>
+			<Box bgColor="orange.50">
+				<Container maxW={["1xl", "2xl", "8xl"]} centerContent py={[8, 16]}>
 					<Heading
-						maxW={["1xl", "2xl", "8xl"]}
-						fontSize={[24, 48, 64]}
-						pb={[8, 16]}
-						alignItems="center"
+						color="pink.400"
+						fontSize={{ base: "3xl", sm: "5xl", lg: "7xl" }}
 					>
-						<Text color="pink.400" as="span">
-							Getting Started <br />
-						</Text>
-						In{" "}
-						<Text color="pink.400" as="span">
-							1, 2, ...3! 🚀
-						</Text>
+						Getting Started
 					</Heading>
-					<VStack spacing={10}>
-						<UploadCard />
-						<Card
-							p={[4, 8]}
-							direction={{ base: "column", xl: "row-reverse" }}
-							overflow="hidden"
-							variant="outline"
-							align="center"
-						>
-							<Stack>
-								<CardBody>
-									<StepCircle {...{ number: 2, color: "green.400" }} />
-									<Heading size={"xl"}>
-										2. Sign-in to{" "}
-										<CombinedLink
-											href="https://open.spotify.com/"
-											color="green.400"
-										>
-											Spotify
-										</CombinedLink>{" "}
-										🎧
-									</Heading>
-
-									<Text fontSize="xl" py="2">
-										We use{" "}
-										<CombinedLink href="https://open.spotify.com/">
-											<strong>Spotify</strong>
-										</CombinedLink>
-										* to seamlessly integrate a high-fidelity background
-										listening experience as you read. <br /> Let the music{" "}
-										<strong>immerse</strong> you into the fantasy of your
-										favorite novels.
-									</Text>
-								</CardBody>
-
-								<CardFooter>
-									<VStack align="start">
-										<LoginButton />
-										<Text color="gray.600">
-											*Spotify Premium is highly recommended–we can't skip ads
-											for you.
-											<br />
-											We hope to support logins to other popular music streaming
-											services in the future.
-										</Text>
-									</VStack>
-								</CardFooter>
-							</Stack>
-						</Card>
-						<Card
-							p={[4, 8]}
-							direction={{ base: "column", xl: "row" }}
-							overflow="hidden"
-							variant="outline"
-						>
-							<StepCircle {...{ number: 2, color: "green.400" }} />
-							<Stack>
-								<CardBody>
-									<Heading size={"xl"}>
-										Sign-in to{" "}
-										<CombinedLink
-											href="https://open.spotify.com/"
-											color="green.400"
-										>
-											Spotify
-										</CombinedLink>{" "}
-										🎧
-									</Heading>
-
-									<Text fontSize="xl" py="2">
-										We use{" "}
-										<CombinedLink href="https://open.spotify.com/">
-											<strong>Spotify</strong>
-										</CombinedLink>
-										* to seamlessly integrate a high-fidelity background
-										listening experience as you read. <br /> Let the music{" "}
-										<strong>immerse</strong> you into the fantasy of your
-										favorite novels.
-									</Text>
-								</CardBody>
-
-								<CardFooter>
-									<Text color="gray.600">
-										*Spotify Premium is highly recommended–we can't skip ads for
-										you.
-										<br />
-										We hope to support logins to other popular music streaming
-										services in the future.
-									</Text>
-								</CardFooter>
-							</Stack>
-						</Card>
-					</VStack>
+					<Heading
+						fontFamily={"Caveat"}
+						fontSize={{ base: "3xl", sm: "5xl", lg: "7xl" }}
+						justifyContent="center"
+						pb={[8, 16]}
+					>
+						In 1, 2, ...3! 🚀
+					</Heading>
+					<Container>
+						<VStack spacing={10}>
+							<UploadCard />
+							<SpotifyCard />
+							<ReadCard />
+						</VStack>
+					</Container>
 				</Container>
 			</Box>
 		</PageWrapper>

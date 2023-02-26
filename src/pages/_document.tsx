@@ -31,13 +31,8 @@ export default class Document extends NextDocument {
 					/>
 					<meta name="msapplication-TileColor" content="#ed64a6" />
 					<meta name="theme-color" content="#ed64a6" />
-					<link
-						href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
-						rel="stylesheet"
-					/>
 				</Head>
 				<body>
-					{/* Make Color mode to persists when you refresh the page. */}
 					<ColorModeScript />
 					<Main />
 					<NextScript />

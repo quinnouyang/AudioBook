@@ -1,6 +1,6 @@
 # AudioBook (Front-end)
 
-> Part of a HackIllinois 2023 project with [@jacobko57](https://github.com/jacobko57).
+> Part of a HackIllinois 2023 project with [@jacobko57](https://github.com/jacobko57). See our hastily written [devpost](https://devpost.com/software/audiobook).
 
 > This is the **just the front-end**. See our "back-end" [here](https://github.com/jacobko57/music-ereader-nlp), where we house our custom machine learning model (details below).
 
